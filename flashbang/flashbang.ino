@@ -8,6 +8,7 @@ void setup() {
   // println("Initialising...\n");
   pinMode(armPin, INPUT);
   pinMode(buttonPin, INPUT);
+  pinMode(armLed, OUTPUT);
   pinMode(leds, OUTPUT);
   // println("\nDone!\n");
 }
