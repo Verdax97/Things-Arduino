@@ -1,37 +1,40 @@
-#define leds "D5"
-#define buttonPin "D7"
-#define armPin "D2"
-#define armLed "D3"
+#define leds 5
+#define buttonPin 7
+#define armPin 2
+#define armLed 3
 
 void setup() {
-  // put your setup code here, to run once:
-  // println("Initialising...\n");
+  Serial.begin(9600);
+  Serial.println("Initialising...\n");
   pinMode(armPin, INPUT);
   pinMode(buttonPin, INPUT);
   pinMode(armLed, OUTPUT);
   pinMode(leds, OUTPUT);
-  // println("\nDone!\n");
+  Serial.println("\nDone!\n");
 }
 
 void loop() {
-  bool isExploded;
+  boolean isExploded;
 
   isExploded = false;
+
+  Serial.println("Flashbang initiated. Ready to explode >:) \n");
   
   if(digitalRead(armPin) == LOW){
     // Flashbang unarmed
-    // println("Flashbang not armed.")
+    Serial.println("Flashbang not armed.");
     digitalWrite(armLed, LOW);
   } else {
     // Flashbang armed
     digitalWrite(armLed, HIGH);
-    // println("Flashbang armed!");
+    Serial.println("Flashbang armed!");
   }
   
   while(digitalRead(armPin) == HIGH){
     if(digitalRead(buttonPin) == HIGH && isExploded == false){
       // Initialise countdown for exploding (5 seconds total)
       // Led blink effect
+      Serial.println("Ignition sequence started!");
       for(int i = 0; i < 25; i++){
         digitalWrite(armLed, LOW);
         delay(100);
@@ -39,6 +42,7 @@ void loop() {
         delay(100);
       }
       // Explosion
+      Serial.println("BOOM!");
       for(int i = 0; i < 100; i++){
         digitalWrite(leds, HIGH);
         delay(50);
@@ -47,6 +51,7 @@ void loop() {
       }
       
       isExploded = true;
+      Serial.begin("Flash is now exploded!");
       break;
     }
   }
@@ -58,4 +63,5 @@ void loop() {
       break;
     }
   }
+  Serial.println("Sequence terminated. Flashbang is reinitiated.");
 }
