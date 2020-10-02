@@ -2,6 +2,7 @@
 #define buttonPin 7
 #define armPin 2
 #define armLed 3
+#define buzzerPin 9
 
 void setup() {
   Serial.begin(9600);
@@ -10,6 +11,7 @@ void setup() {
   pinMode(buttonPin, INPUT);
   pinMode(armLed, OUTPUT);
   pinMode(leds, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
   Serial.println("\nDone!\n");
 }
 
@@ -27,6 +29,7 @@ void loop() {
   } else {
     // Flashbang armed
     digitalWrite(armLed, HIGH);
+    tone(buzzerPin, 2500, 100);
     Serial.println("Flashbang armed!");
   }
   
@@ -36,6 +39,7 @@ void loop() {
       // Led blink effect
       Serial.println("Ignition sequence started!");
       for(int i = 0; i < 25; i++){
+        tone(buzzerPin, 2500, i * 8);
         digitalWrite(armLed, LOW);
         delay(100);
         digitalWrite(armLed, HIGH);
@@ -43,6 +47,7 @@ void loop() {
       }
       // Explosion
       Serial.println("BOOM!");
+      tone(buzzerPin, 3900, 1000);
       for(int i = 0; i < 100; i++){
         digitalWrite(leds, HIGH);
         delay(50);
@@ -63,5 +68,7 @@ void loop() {
       break;
     }
   }
+  
+  tone(buzzerPin, 2500, 100);
   Serial.println("Sequence terminated. Flashbang is reinitiated.");
 }
